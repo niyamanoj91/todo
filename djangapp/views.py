@@ -14,11 +14,15 @@ def delete_djann(request,id):
     djann.objects.filter(id=id).delete()
     return redirect('home')
 
-def update_djann(request,id):
-    b=djann.objects.get(id=id)
-    if request.method=='POST':
-        b.course=request.POST.get('course')
-        b.fees=request.POST.get('fees')
+def update_djann(request, id):
+    b = djann.objects.get(id=id)
+
+    if request.method == 'POST':
+        b.course = request.POST.get('course')
+        b.fees = request.POST.get('fees')
+
         b.save()
+
         return redirect('home')
-    return render(request,'update.html')
+
+    return render(request, 'update.html', {'b': b})
