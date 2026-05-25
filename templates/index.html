@@ -2,74 +2,149 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=fr, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD Application</title>
+
+    <style>
+
+        body{
+            background-color: rgb(112, 30, 8);
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1{
+            color: white;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .crud{
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+
+        form{
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+            width: 300px;
+            border: 2px solid white;
+            border-radius: 10px;
+            background-color: rgba(255,255,255,0.1);
+            color: white;
+        }
+
+        form input{
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button{
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover{
+            opacity: 0.8;
+        }
+
+        table{
+            border-collapse: collapse;
+            color: white;
+            min-width: 400px;
+        }
+
+        table th,
+        table td{
+            border: 1px solid white;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .table-container{
+            overflow-x: auto;
+        }
+
+        a{
+            text-decoration: none;
+        }
+
+    </style>
 </head>
-<style>
-    body{
-        background-color: rgb(112, 30, 8);
-    }
-    form{
-        display: flex;
-        flex-direction: column;
-        margin-top: 100px;
-        text-align: center;
-        padding: 90px;
-        max-width:100px ;
-        border: 1px solid rgb(255, 255, 255);
-        color: white;
-    }
-    .form-container{
-       display: flex;
-       justify-content: center; 
-    }
-    button{
-        font-size: large;
-    }
-    .table-container{
-        display: flex;
-        justify-content: center;
-        margin: 100px;
-    }
-    .container{
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        margin-top: 100px;
-        text-align: center;
-        max-width:100px ;
-    }
-    table{
-        color: white;
-    }
-</style>
+
 <body>
-    <div class="form-container">
-        <form method="POST" >
-            {% csrf_token %}
-            <label for="">Course</label>
-            <input type="text" name="course"><br>
-            <label for="">Fees</label>
-            <input type="number" name="fees"><br>
-            <button>Submit</button>
-        </form>
+
+    <h1>CRUD APPLICATION</h1>
+
+    <div class="crud">
+
+        <div class="form-container">
+            <form method="POST">
+
+                <h2>Add Course</h2>
+
+                {% csrf_token %}
+
+                <label>Course</label>
+                <input type="text" name="course">
+
+                <label>Fees</label>
+                <input type="number" name="fees">
+
+                <button type="submit">Submit</button>
+
+            </form>
+        </div>
+
+        <div class="table-container">
+
+            <table>
+
+                <tr>
+                    <th>Course</th>
+                    <th>Fees</th>
+                    <th>Action</th>
+                </tr>
+
+                {% for i in a %}
+
+                <tr>
+                    <td>{{i.course}}</td>
+                    <td>{{i.fees}}</td>
+
+                    <td>
+                        <a href="{% url 'delete_djann' i.id %}">
+                            <button type="button">Delete</button>
+                        </a>
+
+                        <a href="{% url 'update_djann' i.id %}">
+                            <button type="button">Update</button>
+                        </a>
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+        </div>
+
     </div>
-    <div class="table-container">
-        <table border="1px solid white">
-            <tr>
-                <th>course</th>
-                <th>fees</th>
-                <th>Action</th>
-            </tr>
-            {% for i in a %}
-            <tr>
-                <td>{{i.course}}</td>
-                <td>{{i.fees}}</td>
-                <td><a href="{% url 'delete_djann' i.id %}">DELETE</a>
-                <a href="{% url 'update_djann' i.id %}">UPDATE</a></td>
-            </tr>
-            {% endfor %}
-        </table>
-    </div>
+
 </body>
 </html>
+
+
+
+
